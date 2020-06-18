@@ -1,0 +1,195 @@
+= SQL
+
+== Preface
+
+=== Example Data
+
+==== Customers
+
+|===
+|CustomerID|Name
+
+|1 |Peter
+|2 |Paul
+|3 |Nadia
+|===
+
+==== Orders
+
+|===
+|OrderID|Item|CustomerID
+
+|1 | Cake | 1
+|2 | Coffee | 3
+|3 | Mouse | 4
+|===
+
+=== Example References
+* `table_n.column_n` is a pattern that could match `Customers.Name` or `Orders.OrderID`.
+
+
+== Startup & Run
+
+[source]
+mysqladmin -p status
+        if needed:
+            su to user which the db runs under
+
+* `su mysql` open CLI.
+
+=== Allow remote users to connect
+* in `/etc/mysql/mariadb.conf.d` comment out `bind-address`.
+* in CLI create user:
+[source,sql]
+GRANT ALL PRIVILEGES ON *.*
+TO 'user'@'%'
+IDENTIFIED BY '<pwd>'
+WITH GRANT OPTION;
+
+=== View & Select DB
+* `SHOW DATABASES;`  show available DBs.
+* `USE <db-name>` open chosen DB.
+* `SHOW TABLES;` show all tables
+
+
+
+
+
+
+== Queries
+
+=== Create
+==== CREATE
+[source,sql]
+CREATE TABLE table_name (col_1 datatype, col_2 datatype);
+CREATE TABLE Customers (CustomerID int, Name varchar(225);
+
+
+==== INSERT
+[source,sql]
+INSERT INTO table_name VALUES (literal_1, literal_2);
+INSERT INTO Customers VALUES(1, 'Peter');
+
+Copy `<column>` from `<table-1>` to `<table-2>`.
+[source,sql]
+INSERT INTO <table-2> (<column>)SELECT <column>  FROM <table-1>;
+
+
+
+
+
+=== Read
+Reading is done with the `SELECT FROM WHERE` query.
+
+
+
+* `SELECT * FROM <table>;` show all table entries
+* `SELECT <column> FROM <table>;`
+
+==== WHERE
+[source,sql]
+WHERE x LIKE wildcard;
+WHERE x IS NULL;
+WHERE x IS NOT NULL;
+
+===== Wildcards
+[options=header,cols="<,<,<"]
+|===
+|Symbol |Description|Example
+|%|0..n chars| bl% finds bl, black, blue, and blob
+|_| 	Represents a single character 	|h_t finds hot, hat, and hit
+|[]| 	Represents any single character within the brackets |	h[oa]t finds hot and hat, but not hit
+|^| 	Represents any character not in the brackets 	|h[^oa]t finds hit, but not hot and hat
+|-| 	Represents a range of characters 	|c[a-b]t finds cat and cbt
+|===
+
+
+=== Update
+==== UPDATE
+Set all values in `column` to `value`
+[source,sql]
+UPDATE table SET table.column = value;
+
+Copy values from other table.
+[source,sql]
+UPDATE table_1 SET table_1.column_1 = table_2.column_2
+FROM table_1
+JOIN table_2
+ON table_1.column_0 = table_2.column_0;
+
+
+=== Delete
+* Delete
+[source,sql]
+DELETE
+FROM PLUGINSTATE
+WHERE PLUGINKEY LIKE '%languages%'
+
+* Delete DB <br>
+`DROP DATABASE guacamole_db;`
+* Delete User <br>
+`DROP USER 'foo'@'localhost';`
+
+=== Join
+
+==== Inner Join
+Selects records that have matching values in both tables.
+[source, sql]
+SELECT Customers.Name, Orders.Item
+FROM Customers
+INNER JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID;
+
+
+==== Left Join
+
+[source,sql]
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders
+ON Customers.CustomerID=Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+==== Right Join
+Same as left join, but with swapped positions. Exists only for completeness.
+
+[source,sql]
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2
+ON table1.column_name = table2.column_name;
+
+==== Full Join
+all records when there is a match in left (table1) or right (table2) table records.
+
+[source, sql]
+SELECT column_name(s)
+FROM table1
+FULL JOIN table2
+ON table1.column_name = table2.column_name
+WHERE condition;
+
+=== With
+
+[source,sql]
+WITH temporary_name AS (
+    SELECT *
+    FROM table_name)
+AND temp_name_2 AS (
+    SELECT *
+    FROM table_name)
+SELECT *
+FROM temporary_name
+WHERE column_name operator value;
+
+
+
+== Data Types
+
+|===
+|data type|literal|description
+
+|`char(size)` | 'foo' | fixed length string.
+|`varchar(size)` | `'foo'` | variable lengh string with max size.
+|`int` | 1 |
+|===
