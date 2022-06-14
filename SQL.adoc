@@ -1,4 +1,7 @@
 = SQL
+:toc:
+:toclevels:4
+
 
 == Preface
 
@@ -39,12 +42,7 @@ mysqladmin -p status
 
 === Allow remote users to connect
 * in `/etc/mysql/mariadb.conf.d` comment out `bind-address`.
-* in CLI create user:
-[source,sql]
-GRANT ALL PRIVILEGES ON *.*
-TO 'user'@'%'
-IDENTIFIED BY '<pwd>'
-WITH GRANT OPTION;
+
 
 === View & Select DB
 * `SHOW DATABASES;`  show available DBs.
@@ -52,8 +50,13 @@ WITH GRANT OPTION;
 * `SHOW TABLES;` show all tables
 
 
-
-
+== Admin
+===== Create User
+[source,sql]
+GRANT ALL PRIVILEGES ON *.*
+TO 'user'@'%'
+IDENTIFIED BY '<pwd>'
+WITH GRANT OPTION;
 
 
 == Queries
@@ -69,6 +72,8 @@ CREATE TABLE Customers (CustomerID int, Name varchar(225);
 [source,sql]
 INSERT INTO table_name VALUES (literal_1, literal_2);
 INSERT INTO Customers VALUES(1, 'Peter');
+-- if using AUTO_INCREMENT
+INSERT INTO Customers (NAME) VALUES ('Nancy');
 
 Copy `<column>` from `<table-1>` to `<table-2>`.
 [source,sql]
@@ -193,3 +198,10 @@ WHERE column_name operator value;
 |`varchar(size)` | `'foo'` | variable lengh string with max size.
 |`int` | 1 |
 |===
+
+{empty} +
+
+== Trivia
+* DDL (Data Definition Language)
+- list of commands that deal with db schema modif
+** CREATE / ALTER / DROP / TRUNCATE / COMMENT
