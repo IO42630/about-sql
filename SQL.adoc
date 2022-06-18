@@ -205,3 +205,9 @@ WHERE column_name operator value;
 * DDL (Data Definition Language)
 - list of commands that deal with db schema modif
 ** CREATE / ALTER / DROP / TRUNCATE / COMMENT
+* DML (DML – Data Manipulation Language)
+*  TCL – Transaction Control Language
+DQl – Data Query Language
+DCL – Data Control Language
+
+image:img/sql-sub-lang.png[]
