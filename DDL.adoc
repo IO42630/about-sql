@@ -1,0 +1,9 @@
+= DDL (Data Definition Language)
+
+- list of commands that deal with db schema modif
+** CREATE / ALTER / DROP / TRUNCATE / COMMENT
+
+=== Cmd
+
+* make column nullable
+- `ALTER TABLE <T> MODIFY COLUMN <COL> <TYPE> NULL`

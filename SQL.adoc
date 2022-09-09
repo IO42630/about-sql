@@ -201,13 +201,20 @@ WHERE column_name operator value;
 
 {empty} +
 
+
+DROP TABLE table_name;
+
+
 == Trivia
-* DDL (Data Definition Language)
-- list of commands that deal with db schema modif
-** CREATE / ALTER / DROP / TRUNCATE / COMMENT
+
+
 * DML (DML – Data Manipulation Language)
 *  TCL – Transaction Control Language
-DQl – Data Query Language
-DCL – Data Control Language
+* DQl – Data Query Language
+* DCL – Data Control Language
+* `SELECT COUNT(*) FROM T_BAR`
+
+
+
 
 image:img/sql-sub-lang.png[]
